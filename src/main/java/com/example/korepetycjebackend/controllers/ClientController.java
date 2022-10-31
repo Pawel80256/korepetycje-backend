@@ -1,7 +1,8 @@
 package com.example.korepetycjebackend.controllers;
 
-import com.example.korepetycjebackend.dto.request.RegisterClientRequest;
+import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.models.Client;
+import com.example.korepetycjebackend.models.UserData;
 import com.example.korepetycjebackend.services.ClientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class ClientController {
     }
 
     @PostMapping("/api/client")
-    public UUID createClient(@RequestBody RegisterClientRequest request){
+    public UUID createClient(@RequestBody RegisterRequest request){
         return clientService.createClient(request);
     }
 }

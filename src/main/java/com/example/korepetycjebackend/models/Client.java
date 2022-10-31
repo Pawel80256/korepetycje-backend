@@ -1,20 +1,25 @@
 package com.example.korepetycjebackend.models;
 
+import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import java.util.UUID;
 
 @Entity
-@AllArgsConstructor @NoArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
-@Builder
-public class Client {
+public class Client{
     @Id
     private UUID id;
-    private String emailAddress;
-    private String password;
-    private String firstName;
-    private String lastName;
+
+    @OneToOne
+    private UserData userData;
+
+    public Client(UserData userData) {
+        this.id = UUID.randomUUID();
+        this.userData = userData;
+    }
 }

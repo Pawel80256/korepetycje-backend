@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 @Repository
 public interface BarberRepository extends JpaRepository<Barber, UUID> {
-     boolean existsByEmailAddress(String emailAddress);
-     Barber findByEmailAddress(String emailAddress);
+//     boolean existsByEmailAddress(String emailAddress);
+//     Barber findByEmailAddress(String emailAddress);
 }
