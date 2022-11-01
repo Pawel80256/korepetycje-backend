@@ -18,11 +18,13 @@ public class UserData {
     protected String password;
     protected String firstName;
     protected String lastName;
+    protected String role;
 
-    public UserData(RegisterRequest request){
+    public UserData(RegisterRequest request, String role){
         this.emailAddress = request.getEmailAddress();
         this.password = request.getPassword();
         this.firstName = request.getFirstName();
         this.lastName = request.getLastName();
+        this.role = role;
     }
 }

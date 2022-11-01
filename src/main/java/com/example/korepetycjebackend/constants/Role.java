@@ -1,5 +1,5 @@
 package com.example.korepetycjebackend.constants;
 
-public enum ERole {
+public enum Role {
     ADMIN,BARBER,CLIENT
 }

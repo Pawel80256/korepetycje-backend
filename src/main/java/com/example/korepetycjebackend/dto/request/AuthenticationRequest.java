@@ -1,4 +1,4 @@
-package config.authentication;
+package com.example.korepetycjebackend.dto.request;
 
 import lombok.Data;
 

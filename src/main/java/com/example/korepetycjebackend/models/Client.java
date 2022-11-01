@@ -1,5 +1,6 @@
 package com.example.korepetycjebackend.models;
 
+import com.example.korepetycjebackend.constants.Role;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import lombok.*;
 
@@ -21,6 +22,6 @@ public class Client{
 
     public Client(RegisterRequest registerRequest) {
         this.id = UUID.randomUUID();
-        this.userData = new UserData(registerRequest);
+        this.userData = new UserData(registerRequest, Role.CLIENT.toString());
     }
 }
