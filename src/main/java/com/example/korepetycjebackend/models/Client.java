@@ -3,6 +3,7 @@ package com.example.korepetycjebackend.models;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import lombok.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -15,11 +16,11 @@ public class Client{
     @Id
     private UUID id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private UserData userData;
 
-    public Client(UserData userData) {
+    public Client(RegisterRequest registerRequest) {
         this.id = UUID.randomUUID();
-        this.userData = userData;
+        this.userData = new UserData(registerRequest);
     }
 }

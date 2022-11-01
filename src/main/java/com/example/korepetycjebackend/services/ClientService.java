@@ -20,11 +20,14 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public UUID createClient(RegisterRequest request){
-        var userData = new UserData(request);
-        var client = new Client(userData);
-        //todo: probably find better solution in future
-        userDataRepository.save(userData);
+    public UUID createClient(RegisterRequest registerRequest){
+
+        if(userDataRepository.existsByEmailAddress(registerRequest.getEmailAddress())){
+            throw new RuntimeException("email taken");
+        }
+
+        var client = new Client(registerRequest);
+
         clientRepository.save(client);
         return client.getId();
     }

@@ -20,11 +20,14 @@ public class BarberService {
         return barberRepository.findAll();
     }
 
-    public UUID createBarber(RegisterRequest request){
-        var userData = new UserData(request);
-        var barber = new Barber(userData);
+    public UUID createBarber(RegisterRequest registerRequest){
 
-        userDataRepository.save(userData);
+        if(userDataRepository.existsByEmailAddress(registerRequest.getEmailAddress())){
+            throw new RuntimeException("email taken");
+        }
+
+        var barber = new Barber(registerRequest);
+
         barberRepository.save(barber);
         return barber.getId();
     }
