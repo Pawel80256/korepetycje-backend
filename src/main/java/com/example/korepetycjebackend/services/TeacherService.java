@@ -1,9 +1,8 @@
 package com.example.korepetycjebackend.services;
 
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
-import com.example.korepetycjebackend.models.Barber;
-import com.example.korepetycjebackend.models.UserData;
-import com.example.korepetycjebackend.repositories.BarberRepository;
+import com.example.korepetycjebackend.models.Teacher;
+import com.example.korepetycjebackend.repositories.TeacherRepository;
 import com.example.korepetycjebackend.repositories.UserDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,12 +13,12 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class BarberService {
-    private final BarberRepository barberRepository;
+public class TeacherService {
+    private final TeacherRepository teacherRepository;
     private final UserDataRepository userDataRepository;
     private final PasswordEncoder passwordEncoder;
-    public List<Barber> getAll(){
-        return barberRepository.findAll();
+    public List<Teacher> getAll(){
+        return teacherRepository.findAll();
     }
 
     public UUID createBarber(RegisterRequest registerRequest){
@@ -32,9 +31,9 @@ public class BarberService {
                 passwordEncoder.encode(registerRequest.getPassword())
         );
 
-        var barber = new Barber(registerRequest);
+        var barber = new Teacher(registerRequest);
 
-        barberRepository.save(barber);
+        teacherRepository.save(barber);
         return barber.getId();
     }
 }

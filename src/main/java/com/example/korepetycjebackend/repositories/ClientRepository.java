@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, UUID> {
-//    boolean existsByEmailAddress(String emailAddress);
+
     @Query("SELECT c FROM Client c WHERE  c.userData.emailAddress = :emailAddress")
     Optional<Client> findByEmailAddress(String emailAddress);
 

@@ -13,15 +13,15 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor @NoArgsConstructor
 @Getter @Setter
-public class Barber {
+public class Teacher {
     @Id
     private UUID id;
 
     @OneToOne(cascade = CascadeType.ALL)
     private UserData userData;
 
-    public Barber(RegisterRequest registerRequest) {
+    public Teacher(RegisterRequest registerRequest) {
         this.id = UUID.randomUUID();
-        this.userData = new UserData(registerRequest, Role.BARBER.toString());
+        this.userData = new UserData(registerRequest, Role.TEACHER.toString());
     }
 }

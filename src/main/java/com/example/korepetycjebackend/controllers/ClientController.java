@@ -18,12 +18,12 @@ import java.util.UUID;
 public class ClientController {
     private final ClientService clientService;
 
-    @GetMapping("/api/clients")
+    @GetMapping("/clients")
     public List<Client> getAllClients(){
         return clientService.getAllClients();
     }
 
-    @PostMapping("/api/client")
+    @PostMapping("/client")
     public UUID createClient(@RequestBody RegisterRequest request){
         return clientService.createClient(request);
     }

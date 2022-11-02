@@ -1,8 +1,8 @@
 package com.example.korepetycjebackend.controllers;
 
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
-import com.example.korepetycjebackend.models.Barber;
-import com.example.korepetycjebackend.services.BarberService;
+import com.example.korepetycjebackend.models.Teacher;
+import com.example.korepetycjebackend.services.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,16 +14,16 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-public class BarberController {
-    private final BarberService barberService;
+public class TeacherController {
+    private final TeacherService teacherService;
 
-    @GetMapping("/api/barbers")
-    public List<Barber> getAllBarbers(){
-        return barberService.getAll();
+    @GetMapping("/teachers")
+    public List<Teacher> getAllBarbers(){
+        return teacherService.getAll();
     }
 
-    @PostMapping("/api/barber")
+    @PostMapping("/teacher")
     public UUID createBarber(@RequestBody RegisterRequest request){
-        return barberService.createBarber(request);
+        return teacherService.createBarber(request);
     }
 }

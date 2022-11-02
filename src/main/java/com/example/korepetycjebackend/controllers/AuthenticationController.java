@@ -20,7 +20,7 @@ public class AuthenticationController {
     private final MyUserDetailsService myUserDetailsService;
     private final JwtUtil jwtUtil;
 
-    @PostMapping("/api/authenticate")
+    @PostMapping("/authenticate")
     public ResponseEntity<String> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
      try {
          authenticationManager.authenticate(
