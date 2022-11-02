@@ -2,6 +2,7 @@ package com.example.korepetycjebackend.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.example.korepetycjebackend.config.security.MyUserDetails;
 import com.example.korepetycjebackend.constants.TempJwtSecret;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -18,17 +19,16 @@ public class JwtUtil {
 
     private final Date EXPIRATION_TIME = new Date(System.currentTimeMillis() + 1000 * 60 * 60);
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(MyUserDetails myUserDetails){
         Map<String,Object> claims = new HashMap<>();
-        claims.put("roles", userDetails.getAuthorities().stream().map(Object::toString).collect(Collectors.toList()));
+        claims.put("roles", myUserDetails.getAuthorities().stream().map(Object::toString).collect(Collectors.toList()));
 
-        var token = JWT.create()
-                .withSubject(userDetails.getUsername())
-                .withClaim("roles",userDetails.getAuthorities().stream().map(Object::toString).collect(Collectors.toList()))
+        return JWT.create()
+                .withSubject(myUserDetails.getUserId().toString())
+                .withClaim("roles",myUserDetails.getAuthorities().stream().map(Object::toString).collect(Collectors.toList()))
                 .withIssuedAt(new Date(System.currentTimeMillis()))
                 .withExpiresAt(EXPIRATION_TIME)
                 .sign(Algorithm.HMAC256(TempJwtSecret.TEMP_SECRET.toString().getBytes()));
-        return token;
 
     }
 

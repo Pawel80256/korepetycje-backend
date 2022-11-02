@@ -14,7 +14,7 @@ public class MyUserDetailsService implements UserDetailsService {
     private final UserDataRepository userDataRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
+    public MyUserDetails loadUserByUsername(String emailAddress) throws UsernameNotFoundException {
         var userData = userDataRepository.findByEmailAddress(emailAddress);
         if(userData.isEmpty()){
             throw new RuntimeException("user not found");

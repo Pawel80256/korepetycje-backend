@@ -14,6 +14,7 @@ import java.util.UUID;
 @Getter @Setter
 public class UserData {
     @Id
+    protected UUID id;
     protected String emailAddress;
     protected String password;
     protected String firstName;
@@ -21,6 +22,7 @@ public class UserData {
     protected String role;
 
     public UserData(RegisterRequest request, String role){
+        this.id = UUID.randomUUID();
         this.emailAddress = request.getEmailAddress();
         this.password = request.getPassword();
         this.firstName = request.getFirstName();

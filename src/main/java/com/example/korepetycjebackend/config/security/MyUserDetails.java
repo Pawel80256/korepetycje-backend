@@ -1,19 +1,24 @@
 package com.example.korepetycjebackend.config.security;
 
 import com.example.korepetycjebackend.models.UserData;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
+@Getter
 public class MyUserDetails implements UserDetails {
+    private UUID userId;
     private String emailAddress;
     private String password;
     private List<GrantedAuthority> authorities;
 
     public MyUserDetails(UserData userData){
+        this.userId = userData.getId();
         this.emailAddress = userData.getEmailAddress();
         this.password = userData.getPassword();
         this.authorities = List.of(new SimpleGrantedAuthority(userData.getRole()));

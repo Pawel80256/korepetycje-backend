@@ -1,5 +1,6 @@
 package com.example.korepetycjebackend.controllers;
 
+import com.example.korepetycjebackend.config.security.MyUserDetails;
 import com.example.korepetycjebackend.dto.request.AuthenticationRequest;
 import com.example.korepetycjebackend.utils.JwtUtil;
 import com.example.korepetycjebackend.config.security.MyUserDetailsService;
@@ -29,7 +30,7 @@ public class AuthenticationController {
      } catch (BadCredentialsException e) {
          throw new RuntimeException("bad credentials");
      }
-     var userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getEmailAddress());
+     MyUserDetails userDetails = myUserDetailsService.loadUserByUsername(authenticationRequest.getEmailAddress());
      var jwt = jwtUtil.generateToken(userDetails);
      return ResponseEntity.ok(jwt);
     }
