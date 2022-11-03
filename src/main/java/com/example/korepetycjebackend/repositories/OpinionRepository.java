@@ -1,11 +1,11 @@
 package com.example.korepetycjebackend.repositories;
 
-import com.example.korepetycjebackend.models.Teacher;
+import com.example.korepetycjebackend.models.Opinion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
 import java.util.UUID;
+
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, UUID> {
+public interface OpinionRepository extends JpaRepository<Opinion, UUID> {
 }
