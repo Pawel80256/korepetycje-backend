@@ -18,8 +18,12 @@ public class Teacher {
     @OneToOne(cascade = CascadeType.ALL)
     private UserData userData;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
+
     @OneToMany
-    List<Subject> subjects;
+    private List<Subject> subjects;
+
 
     public Teacher(RegisterRequest registerRequest) {
         this.id = UUID.randomUUID();
