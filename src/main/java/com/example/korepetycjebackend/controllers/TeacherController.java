@@ -15,12 +15,12 @@ public class TeacherController {
     private final TeacherService teacherService;
 
     @GetMapping("/teachers")
-    public List<Teacher> getAllBarbers(){
+    public List<Teacher> getAllTeachers(){
         return teacherService.getAll();
     }
 
     @PostMapping("/teacher")
-    public UUID createBarber(@RequestBody RegisterRequest request){
+    public UUID createTeacher(@RequestBody RegisterRequest request){
         return teacherService.createTeacher(request);
     }
 
