@@ -18,7 +18,7 @@ public class Teacher {
     @OneToOne(cascade = CascadeType.ALL)
     private UserData userData;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Subject> subjects;
 
 

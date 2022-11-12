@@ -1,6 +1,7 @@
 package com.example.korepetycjebackend.services;
 
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
+import com.example.korepetycjebackend.models.Subject;
 import com.example.korepetycjebackend.models.Teacher;
 import com.example.korepetycjebackend.repositories.TeacherRepository;
 import com.example.korepetycjebackend.repositories.UserDataRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,7 +23,7 @@ public class TeacherService {
         return teacherRepository.findAll();
     }
 
-    public UUID createBarber(RegisterRequest registerRequest){
+    public UUID createTeacher(RegisterRequest registerRequest){
 
         if(userDataRepository.existsByEmailAddress(registerRequest.getEmailAddress())){
             throw new RuntimeException("email taken");
@@ -35,5 +37,20 @@ public class TeacherService {
 
         teacherRepository.save(teacher);
         return teacher.getId();
+    }
+
+    public void addSubjects(UUID teacherId, List<String> subjectStrings){
+        var teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(()-> new RuntimeException("teacher not found"));
+
+        var teacherSubjects = teacher.getSubjects();
+
+        subjectStrings.forEach(subject->{
+            teacherSubjects.add(new Subject(subject));
+        });
+
+        teacher.setSubjects(teacherSubjects);
+
+        teacherRepository.save(teacher);
     }
 }

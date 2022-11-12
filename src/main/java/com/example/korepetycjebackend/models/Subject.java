@@ -13,4 +13,5 @@ import javax.persistence.Id;
 public class Subject {
     @Id
     private String subjectName;
+
 }
