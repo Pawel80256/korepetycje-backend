@@ -18,9 +18,6 @@ public class Teacher {
     @OneToOne(cascade = CascadeType.ALL)
     private UserData userData;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
-
     @OneToMany
     private List<Subject> subjects;
 
