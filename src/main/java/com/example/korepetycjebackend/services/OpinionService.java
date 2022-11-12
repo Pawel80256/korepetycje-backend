@@ -26,7 +26,7 @@ public class OpinionService {
                 .orElseThrow(() -> new RuntimeException("teacher not found"));
         var opinion = Opinion.builder()
                 .id(UUID.randomUUID())
-                .text(createOpinionRequest.getText())
+                .textValue(createOpinionRequest.getTextValue())
                 .numericValue(createOpinionRequest.getNumericValue())
                 .client(client)
                 .teacher(teacher)

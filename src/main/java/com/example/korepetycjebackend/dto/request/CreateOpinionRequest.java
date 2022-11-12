@@ -9,7 +9,7 @@ import java.util.UUID;
 public class CreateOpinionRequest {
     private UUID clientId;
     private UUID teacherId;
-    private String Text;
+    private String textValue;
     private Integer numericValue;
     private LocalDate createdAt;
 }

@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 import java.util.UUID;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor @Builder
 @Getter @Setter
 public class Client{
     @Id

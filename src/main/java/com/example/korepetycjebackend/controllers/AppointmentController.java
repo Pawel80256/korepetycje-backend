@@ -3,9 +3,7 @@ package com.example.korepetycjebackend.controllers;
 import com.example.korepetycjebackend.dto.request.CreateAppointmentRequest;
 import com.example.korepetycjebackend.services.AppointmentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -19,4 +17,8 @@ public class AppointmentController {
         return appointmentService.createAppointment(request);
     }
 
+    @DeleteMapping("/appointment/{appointmentId}")
+    public void deleteAppointment(@PathVariable UUID appointmentId){
+        appointmentService.deleteAppointment(appointmentId);
+    }
 }

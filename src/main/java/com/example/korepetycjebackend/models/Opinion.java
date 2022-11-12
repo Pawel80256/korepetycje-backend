@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Opinion {
     @Id
     private UUID id;
-    private String text;
+    private String textValue;
     private Integer numericValue;
     private LocalDate createdAt;
 

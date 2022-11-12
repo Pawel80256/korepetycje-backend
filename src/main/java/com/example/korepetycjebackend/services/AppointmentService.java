@@ -41,4 +41,8 @@ public class AppointmentService {
 
         return appointment.getId();
     }
+
+    public void deleteAppointment(UUID appointmentId){
+        appointmentRepository.deleteById(appointmentId);
+    }
 }
