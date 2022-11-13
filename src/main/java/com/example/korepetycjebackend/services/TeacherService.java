@@ -1,6 +1,8 @@
 package com.example.korepetycjebackend.services;
 
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
+import com.example.korepetycjebackend.dto.request.AddToProfileInfoRequest;
+import com.example.korepetycjebackend.models.Paragraph;
 import com.example.korepetycjebackend.models.Subject;
 import com.example.korepetycjebackend.models.Teacher;
 import com.example.korepetycjebackend.repositories.TeacherRepository;
@@ -9,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +22,10 @@ public class TeacherService {
     private final PasswordEncoder passwordEncoder;
     public List<Teacher> getAll(){
         return teacherRepository.findAll();
+    }
+
+    public List<Teacher> getBySubject(String subject){
+        return teacherRepository.findBySubject(subject);
     }
 
     public UUID createTeacher(RegisterRequest registerRequest){
@@ -50,6 +55,34 @@ public class TeacherService {
         });
 
         teacher.setSubjects(teacherSubjects);
+
+        teacherRepository.save(teacher);
+    }
+
+    public void addToProfileInfo(UUID teacherId, AddToProfileInfoRequest request){
+        var teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(()-> new RuntimeException("teacher not found"));
+
+        var teacherProfileInfo = teacher.getProfileInfo();
+
+        request.getParagraphs().forEach((paragraphDto -> {
+            teacherProfileInfo.add(new Paragraph(paragraphDto));
+        }));
+
+        teacher.setProfileInfo(teacherProfileInfo);
+
+        teacherRepository.save(teacher);
+    }
+
+    public void deleteFromProfileInfo(UUID teacherId, UUID paragraphId){
+        var teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(()-> new RuntimeException("teacher not found"));
+
+        var teacherProfileInfo = teacher.getProfileInfo();
+
+        teacherProfileInfo.removeIf(paragraph -> paragraph.getId().equals(paragraphId));
+
+        teacher.setProfileInfo(teacherProfileInfo);
 
         teacherRepository.save(teacher);
     }

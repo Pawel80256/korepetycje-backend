@@ -1,0 +1,27 @@
+package com.example.korepetycjebackend.models;
+
+import com.example.korepetycjebackend.dto.ParagraphDto;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.util.UUID;
+
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+@Entity
+public class Paragraph {
+    @Id
+    private UUID id;
+    private String title;
+    private String content;
+
+    public Paragraph(ParagraphDto paragraphDto){
+        this.id = UUID.randomUUID();
+        this.title = paragraphDto.getTitle();
+        this.content = paragraphDto.getContent();
+    }
+}
