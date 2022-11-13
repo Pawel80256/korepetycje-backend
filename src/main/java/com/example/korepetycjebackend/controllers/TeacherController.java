@@ -46,6 +46,11 @@ public class TeacherController {
         teacherService.updateProfileInfo(paragraphId,request);
     }
 
+    @PutMapping("/teacher/{teacherId}/paragraph/{paragraphId}/order")
+    public void changeParagraphOrder(@PathVariable UUID teacherId, @PathVariable UUID paragraphId, @RequestParam boolean orderUp){
+        teacherService.changeParagraphOrder(teacherId,paragraphId,orderUp);
+    }
+
     @DeleteMapping("/teacher/{teacherId}/profileInfo/{paragraphId}")
     public void deleteFromProfileInfo(@PathVariable UUID teacherId, @PathVariable UUID paragraphId){
         teacherService.deleteFromProfileInfo(teacherId,paragraphId);

@@ -13,9 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +62,7 @@ public class TeacherService {
         teacherRepository.save(teacher);
     }
 
+    //todo: change list parameter to only one paragraph
     public void addToProfileInfo(UUID teacherId, AddToProfileInfoRequest request){
         var teacher = teacherRepository.findById(teacherId)
                 .orElseThrow(()-> new RuntimeException("teacher not found"));
@@ -104,5 +104,29 @@ public class TeacherService {
         paragraph.setContent(updateParagraphRequest.getContent());
 
         paragraphRepository.save(paragraph);
+    }
+
+    public void changeParagraphOrder(UUID teacherId, UUID paragraphId, boolean orderUp){
+        var teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(()-> new RuntimeException("teacher not found"));
+        var selectedParagraph = paragraphRepository.findById(paragraphId)
+                .orElseThrow(()-> new RuntimeException("paragraph not found"));
+
+        var teacherProfileInfo = teacher.getProfileInfo();
+        teacherProfileInfo.sort(Comparator.comparing(Paragraph::getOrderr));
+
+        int indexOfSelectedParagraph = teacherProfileInfo.indexOf(selectedParagraph);
+        int indexOfNeighbourParagraph = orderUp ? indexOfSelectedParagraph - 1 : indexOfSelectedParagraph + 1;
+
+        var neighbourParagraph = teacherProfileInfo.get(indexOfNeighbourParagraph);
+
+        int orderOfSelectedParagraph = selectedParagraph.getOrderr();
+        int orderOfNeighbourParagraph = neighbourParagraph.getOrderr();
+
+        selectedParagraph.setOrderr(orderOfNeighbourParagraph);
+        neighbourParagraph.setOrderr(orderOfSelectedParagraph);
+
+        paragraphRepository.saveAll(Arrays.asList(selectedParagraph,neighbourParagraph));
+
     }
 }
