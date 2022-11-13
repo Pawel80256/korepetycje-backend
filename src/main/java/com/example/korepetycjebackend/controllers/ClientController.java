@@ -1,14 +1,13 @@
 package com.example.korepetycjebackend.controllers;
 
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
+import com.example.korepetycjebackend.models.Appointment;
 import com.example.korepetycjebackend.models.Client;
 import com.example.korepetycjebackend.models.UserData;
+import com.example.korepetycjebackend.services.AppointmentService;
 import com.example.korepetycjebackend.services.ClientService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,10 +16,16 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClientController {
     private final ClientService clientService;
+    private final AppointmentService appointmentService;
 
     @GetMapping("/clients")
     public List<Client> getAllClients(){
         return clientService.getAllClients();
+    }
+
+    @GetMapping("/client/{clientId}/appointments")
+    public List<Appointment> getAppointmentsByClientId(@PathVariable UUID clientId){
+        return appointmentService.getByClientId(clientId);
     }
 
     @PostMapping("/client")

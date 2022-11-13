@@ -3,7 +3,9 @@ package com.example.korepetycjebackend.controllers;
 import com.example.korepetycjebackend.dto.request.AddToProfileInfoRequest;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.dto.request.UpdateParagraphRequest;
+import com.example.korepetycjebackend.models.Appointment;
 import com.example.korepetycjebackend.models.Teacher;
+import com.example.korepetycjebackend.services.AppointmentService;
 import com.example.korepetycjebackend.services.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +17,21 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TeacherController {
     private final TeacherService teacherService;
+    private final AppointmentService appointmentService;
 
     @GetMapping("/teachers")
     public List<Teacher> getAllTeachers(){
         return teacherService.getAll();
     }
 
-    @GetMapping("teachersBySubject")
+    @GetMapping("/teachersBySubject")
     public List<Teacher> getBySubject(@RequestParam String subject){
         return teacherService.getBySubject(subject);
+    }
+
+    @GetMapping("/teacher/{teacherId}/appointments")
+    public List<Appointment> getAppointmentsByTeacherId(@PathVariable UUID teacherId){
+        return appointmentService.getByTeacherId(teacherId);
     }
 
     @PostMapping("/teacher")

@@ -9,6 +9,7 @@ import com.example.korepetycjebackend.repositories.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -40,6 +41,14 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
 
         return appointment.getId();
+    }
+
+    public List<Appointment> getByTeacherId(UUID teacherId){
+        return appointmentRepository.findByTeacherId(teacherId);
+    }
+
+    public List<Appointment> getByClientId(UUID clientId){
+        return appointmentRepository.findByClientId(clientId);
     }
 
     public void deleteAppointment(UUID appointmentId){
