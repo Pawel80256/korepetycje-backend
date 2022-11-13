@@ -2,6 +2,7 @@ package com.example.korepetycjebackend.controllers;
 
 import com.example.korepetycjebackend.dto.request.AddToProfileInfoRequest;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
+import com.example.korepetycjebackend.dto.request.UpdateParagraphRequest;
 import com.example.korepetycjebackend.models.Teacher;
 import com.example.korepetycjebackend.services.TeacherService;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,14 @@ public class TeacherController {
         teacherService.addToProfileInfo(teacherId,request);
     }
 
+    @PutMapping("/teacher/paragraph/{paragraphId}")
+    public void updateProfileInfo(@PathVariable UUID paragraphId, @RequestBody UpdateParagraphRequest request){
+        teacherService.updateProfileInfo(paragraphId,request);
+    }
+
     @DeleteMapping("/teacher/{teacherId}/profileInfo/{paragraphId}")
     public void deleteFromProfileInfo(@PathVariable UUID teacherId, @PathVariable UUID paragraphId){
         teacherService.deleteFromProfileInfo(teacherId,paragraphId);
     }
+
 }

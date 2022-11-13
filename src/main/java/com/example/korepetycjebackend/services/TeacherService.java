@@ -2,15 +2,18 @@ package com.example.korepetycjebackend.services;
 
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.dto.request.AddToProfileInfoRequest;
+import com.example.korepetycjebackend.dto.request.UpdateParagraphRequest;
 import com.example.korepetycjebackend.models.Paragraph;
 import com.example.korepetycjebackend.models.Subject;
 import com.example.korepetycjebackend.models.Teacher;
+import com.example.korepetycjebackend.repositories.ParagraphRepository;
 import com.example.korepetycjebackend.repositories.TeacherRepository;
 import com.example.korepetycjebackend.repositories.UserDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +22,7 @@ import java.util.UUID;
 public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final UserDataRepository userDataRepository;
+    private final ParagraphRepository paragraphRepository;
     private final PasswordEncoder passwordEncoder;
     public List<Teacher> getAll(){
         return teacherRepository.findAll();
@@ -66,7 +70,12 @@ public class TeacherService {
         var teacherProfileInfo = teacher.getProfileInfo();
 
         request.getParagraphs().forEach((paragraphDto -> {
-            teacherProfileInfo.add(new Paragraph(paragraphDto));
+            var order =
+                    teacherProfileInfo.size() == 0
+                    ? 0
+                    : teacherProfileInfo.stream().map(Paragraph::getOrderr).max(Comparator.naturalOrder()).get() + 1;
+            var paragraph = new Paragraph(paragraphDto, order);
+            teacherProfileInfo.add(paragraph);
         }));
 
         teacher.setProfileInfo(teacherProfileInfo);
@@ -85,5 +94,15 @@ public class TeacherService {
         teacher.setProfileInfo(teacherProfileInfo);
 
         teacherRepository.save(teacher);
+    }
+
+    public void updateProfileInfo(UUID paragraphId, UpdateParagraphRequest updateParagraphRequest){
+        var paragraph = paragraphRepository.findById(paragraphId)
+                .orElseThrow(()->new RuntimeException("paragraph not found"));
+
+        paragraph.setTitle(updateParagraphRequest.getTitle());
+        paragraph.setContent(updateParagraphRequest.getContent());
+
+        paragraphRepository.save(paragraph);
     }
 }

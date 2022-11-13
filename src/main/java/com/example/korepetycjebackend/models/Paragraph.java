@@ -18,10 +18,12 @@ public class Paragraph {
     private UUID id;
     private String title;
     private String content;
+    private Integer orderr;
 
-    public Paragraph(ParagraphDto paragraphDto){
+    public Paragraph(ParagraphDto paragraphDto, Integer orderr){
         this.id = UUID.randomUUID();
         this.title = paragraphDto.getTitle();
         this.content = paragraphDto.getContent();
+        this.orderr = orderr;
     }
 }
