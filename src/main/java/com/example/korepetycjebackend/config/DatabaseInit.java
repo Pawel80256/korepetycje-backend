@@ -33,6 +33,7 @@ public class DatabaseInit {
                     .lastName("clientLastName")
                     .emailAddress("client@op.pl")
                     .password(passwordEncoder.encode("password"))
+                    .role("CLIENT")
                     .build();
             var client = Client.builder()
                     .id(UUID.randomUUID())
@@ -49,6 +50,7 @@ public class DatabaseInit {
                     .lastName("teacherLastName")
                     .emailAddress("teacher@op.pl")
                     .password(passwordEncoder.encode("password"))
+                    .role("TEACHER")
                     .build();
             var teacher = Teacher.builder()
                     .id(UUID.randomUUID())

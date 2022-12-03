@@ -29,10 +29,16 @@ public class OpinionService {
                 .textValue(createOpinionRequest.getTextValue())
                 .numericValue(createOpinionRequest.getNumericValue())
                 .client(client)
-                .teacher(teacher)
                 .createdAt(LocalDate.now())
                 .build();
+
         opinionRepository.save(opinion);
+
+        var teacherOpinions = teacher.getOpinions();
+        teacherOpinions.add(opinion);
+        teacher.setOpinions(teacherOpinions);
+
+        teacherRepository.save(teacher);
         return opinion.getId();
     }
 }

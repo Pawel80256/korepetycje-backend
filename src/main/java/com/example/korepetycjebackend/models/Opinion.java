@@ -23,8 +23,5 @@ public class Opinion {
     private LocalDate createdAt;
 
     @ManyToOne
-    private Teacher teacher;
-
-    @ManyToOne
     private Client client;
 }
