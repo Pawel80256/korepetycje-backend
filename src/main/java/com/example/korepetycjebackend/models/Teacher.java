@@ -18,7 +18,7 @@ public class Teacher {
     @OneToOne(cascade = CascadeType.ALL)
     private UserData userData;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Subject> subjects;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
