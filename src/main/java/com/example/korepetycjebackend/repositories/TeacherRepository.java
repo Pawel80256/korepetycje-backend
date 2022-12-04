@@ -15,4 +15,7 @@ public interface TeacherRepository extends JpaRepository<Teacher, UUID> {
             "(SELECT ts.teacher_id FROM teacher_subjects ts" +
             " WHERE ts.subjects_subject_name = :subject)", nativeQuery = true)
     List<Teacher> findBySubject(String subject);
+
+    List<Teacher> findByCity(String city);
+
 }

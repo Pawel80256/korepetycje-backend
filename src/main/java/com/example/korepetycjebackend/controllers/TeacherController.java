@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,9 +30,21 @@ public class TeacherController {
         return teacherService.getBySubject(subject);
     }
 
+    @GetMapping("/teachersBySubjectAndCity")
+    List<Teacher> getBySubjectAndCity(@RequestParam String subject, @RequestParam String city){
+        return teacherService.getAllBySubjectAndCity(subject,city);
+    }
+
     @GetMapping("/teacher/{teacherId}/appointments")
     public List<Appointment> getAppointmentsByTeacherId(@PathVariable UUID teacherId){
         return appointmentService.getByTeacherId(teacherId);
+    }
+
+    @GetMapping("/teacher/cities")
+    public List<String> getAllCities(){
+        var teachers = teacherService.getAll();
+        var cities = teachers.stream().map(t -> t.getCity()).collect(Collectors.toList());
+        return cities;  
     }
 
     @PostMapping("/teacher")

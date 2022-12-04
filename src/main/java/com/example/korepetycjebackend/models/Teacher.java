@@ -15,6 +15,8 @@ public class Teacher {
     @Id
     private UUID id;
 
+    private String city;
+
     @OneToOne(cascade = CascadeType.ALL)
     private UserData userData;
 

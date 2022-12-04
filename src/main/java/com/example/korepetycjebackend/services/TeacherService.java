@@ -7,6 +7,7 @@ import com.example.korepetycjebackend.models.Paragraph;
 import com.example.korepetycjebackend.models.Subject;
 import com.example.korepetycjebackend.models.Teacher;
 import com.example.korepetycjebackend.repositories.ParagraphRepository;
+import com.example.korepetycjebackend.repositories.SubjectRepository;
 import com.example.korepetycjebackend.repositories.TeacherRepository;
 import com.example.korepetycjebackend.repositories.UserDataRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class TeacherService {
     private final TeacherRepository teacherRepository;
     private final UserDataRepository userDataRepository;
     private final ParagraphRepository paragraphRepository;
+    private final SubjectRepository subjectRepository;
     private final PasswordEncoder passwordEncoder;
     public List<Teacher> getAll(){
         return teacherRepository.findAll();
@@ -45,6 +47,15 @@ public class TeacherService {
 
         teacherRepository.save(teacher);
         return teacher.getId();
+    }
+
+    public List<Teacher> getAllBySubjectAndCity(String subjectName, String city){
+        var teachers = teacherRepository.findByCity(city);
+        var subject = subjectRepository.findBySubjectName(subjectName)
+                .orElseThrow(() -> new RuntimeException("Teacher's subject not found"));
+        return teachers.stream()
+                .filter(teacher -> teacher.getSubjects().contains(subject))
+                .collect(Collectors.toList());
     }
 
     public void addSubjects(UUID teacherId, List<String> subjectStrings){

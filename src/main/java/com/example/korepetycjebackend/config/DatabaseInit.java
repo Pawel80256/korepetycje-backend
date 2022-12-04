@@ -84,6 +84,7 @@ public class DatabaseInit {
             var teacher = Teacher.builder()
                     .id(UUID.randomUUID())
                     .userData(userData)
+                    .city("Białystok")
                     .subjects(Arrays.asList(new Subject("matematyka"),new Subject("angielski")))
                     .build();
             teacherRepository.save(teacher);
@@ -99,6 +100,7 @@ public class DatabaseInit {
             var teacher2 = Teacher.builder()
                     .id(UUID.randomUUID())
                     .userData(userData2)
+                    .city("Warszawa")
                     .subjects(Arrays.asList(new Subject("informatyka")))
                     .build();
             teacherRepository.save(teacher2);
@@ -114,6 +116,7 @@ public class DatabaseInit {
             var teacher3 = Teacher.builder()
                     .id(UUID.randomUUID())
                     .userData(userData3)
+                    .city("Zambrów")
                     .subjects(Arrays.asList(new Subject("biologia"),new Subject("chemia")))
                     .build();
 
@@ -130,6 +133,7 @@ public class DatabaseInit {
             var teacher4 = Teacher.builder()
                     .id(UUID.randomUUID())
                     .userData(userData4)
+                    .city("Gdańsk")
                     .subjects(Arrays.asList(new Subject("matematyka"),new Subject("informatyka")))
                     .build();
             teacherRepository.save(teacher4);
