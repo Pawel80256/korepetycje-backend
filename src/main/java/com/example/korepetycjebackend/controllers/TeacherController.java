@@ -25,6 +25,11 @@ public class TeacherController {
         return teacherService.getAll();
     }
 
+    @GetMapping("/teacher/{teacherId}")
+    public Teacher getById(@PathVariable UUID teacherId){
+        return teacherService.getById(teacherId);
+    }
+
     @GetMapping("/teachersBySubject")
     public List<Teacher> getBySubject(@RequestParam String subject){
         return teacherService.getBySubject(subject);

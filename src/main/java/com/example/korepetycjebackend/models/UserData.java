@@ -3,10 +3,7 @@ package com.example.korepetycjebackend.models;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity

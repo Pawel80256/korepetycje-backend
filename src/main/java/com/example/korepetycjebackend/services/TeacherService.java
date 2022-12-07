@@ -33,6 +33,10 @@ public class TeacherService {
         return teacherRepository.findBySubject(subject);
     }
 
+    public Teacher getById(UUID id){
+        return teacherRepository.findById(id).orElseThrow(()-> new RuntimeException("teacher not found"));
+    }
+
     public UUID createTeacher(RegisterRequest registerRequest){
 
         if(userDataRepository.existsByEmailAddress(registerRequest.getEmailAddress())){
@@ -44,7 +48,6 @@ public class TeacherService {
         );
 
         var teacher = new Teacher(registerRequest);
-
         teacherRepository.save(teacher);
         return teacher.getId();
     }
