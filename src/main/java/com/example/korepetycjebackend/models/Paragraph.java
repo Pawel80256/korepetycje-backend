@@ -26,4 +26,11 @@ public class Paragraph {
         this.content = paragraphDto.getContent();
         this.orderr = orderr;
     }
+
+//    public Paragraph(String title, String content, Integer orderr){
+//        this.id = UUID.randomUUID();
+//        this.title = title;
+//        this.content = content;
+//        this.orderr = orderr;
+//    }
 }

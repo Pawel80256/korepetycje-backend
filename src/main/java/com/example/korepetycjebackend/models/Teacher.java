@@ -29,6 +29,10 @@ public class Teacher {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Opinion> opinions;
 
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Appointment> appointments;
+
+
     public Teacher(RegisterRequest registerRequest) {
         this.id = UUID.randomUUID();
         this.userData = new UserData(registerRequest, Role.TEACHER.toString());

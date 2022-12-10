@@ -1,9 +1,7 @@
 package com.example.korepetycjebackend.config;
 
-import com.example.korepetycjebackend.models.Client;
-import com.example.korepetycjebackend.models.Subject;
-import com.example.korepetycjebackend.models.Teacher;
-import com.example.korepetycjebackend.models.UserData;
+import com.example.korepetycjebackend.dto.ParagraphDto;
+import com.example.korepetycjebackend.models.*;
 import com.example.korepetycjebackend.repositories.AppointmentRepository;
 import com.example.korepetycjebackend.repositories.ClientRepository;
 import com.example.korepetycjebackend.repositories.TeacherRepository;
@@ -73,6 +71,7 @@ public class DatabaseInit {
         }
 
         if(teacherRepository.count()==0){
+
             var userData = UserData.builder()
                     .id(UUID.randomUUID())
                     .firstName("teacherFirstName")
@@ -81,10 +80,18 @@ public class DatabaseInit {
                     .password(passwordEncoder.encode("password"))
                     .role("TEACHER")
                     .build();
+
+            var profileInfo = Arrays.asList(
+                    new Paragraph(new ParagraphDto("Paragraph1","Content1Content1Content1Content1"),0),
+                    new Paragraph(new ParagraphDto("Paragraph2","Content2Content1Content2Content2"),1),
+                    new Paragraph(new ParagraphDto("Paragraph3","Content3Content3Content1Content3"),2)
+            );
+
             var teacher = Teacher.builder()
                     .id(UUID.randomUUID())
                     .userData(userData)
                     .city("Białystok")
+                    .profileInfo(profileInfo)
                     .subjects(Arrays.asList(new Subject("matematyka"),new Subject("angielski")))
                     .build();
             teacherRepository.save(teacher);

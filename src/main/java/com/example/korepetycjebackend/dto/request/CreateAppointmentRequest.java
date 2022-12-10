@@ -7,8 +7,8 @@ import java.util.UUID;
 
 @Getter
 public class CreateAppointmentRequest {
-    private UUID clientId;
+//    private UUID clientId;
     private UUID teacherId;
     private LocalDateTime date;
-    private String subject;
+//    private String subject;
 }

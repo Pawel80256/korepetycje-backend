@@ -40,10 +40,10 @@ public class TeacherController {
         return teacherService.getAllBySubjectAndCity(subject,city);
     }
 
-    @GetMapping("/teacher/{teacherId}/appointments")
-    public List<Appointment> getAppointmentsByTeacherId(@PathVariable UUID teacherId){
-        return appointmentService.getByTeacherId(teacherId);
-    }
+//    @GetMapping("/teacher/{teacherId}/appointments")
+//    public List<Appointment> getAppointmentsByTeacherId(@PathVariable UUID teacherId){
+//        return appointmentService.getByTeacherId(teacherId);
+//    }
 
     @GetMapping("/teacher/cities")
     public List<String> getAllCities(){
