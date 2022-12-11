@@ -4,10 +4,8 @@ import com.example.korepetycjebackend.constants.Role;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +17,9 @@ public class Client{
 
     @OneToOne(cascade = CascadeType.ALL)
     private UserData userData;
+
+    @OneToMany
+    private List<Appointment> appointments;
 
     public Client(RegisterRequest registerRequest) {
         this.id = UUID.randomUUID();

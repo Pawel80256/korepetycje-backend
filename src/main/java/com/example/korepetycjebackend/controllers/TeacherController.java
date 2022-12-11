@@ -4,6 +4,7 @@ import com.example.korepetycjebackend.dto.request.AddToProfileInfoRequest;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.dto.request.UpdateParagraphRequest;
 import com.example.korepetycjebackend.models.Appointment;
+import com.example.korepetycjebackend.models.Subject;
 import com.example.korepetycjebackend.models.Teacher;
 import com.example.korepetycjebackend.services.AppointmentService;
 import com.example.korepetycjebackend.services.TeacherService;
@@ -38,6 +39,11 @@ public class TeacherController {
     @GetMapping("/teachersBySubjectAndCity")
     List<Teacher> getBySubjectAndCity(@RequestParam String subject, @RequestParam String city){
         return teacherService.getAllBySubjectAndCity(subject,city);
+    }
+
+    @GetMapping("/teacher/{teacherId}/subjects")
+    List<Subject> getSubjectsByTeacherId(@PathVariable UUID teacherId){
+        return teacherService.getSubjectsByTeacherId(teacherId);
     }
 
 //    @GetMapping("/teacher/{teacherId}/appointments")

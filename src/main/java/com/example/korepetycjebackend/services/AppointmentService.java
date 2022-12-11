@@ -2,10 +2,7 @@ package com.example.korepetycjebackend.services;
 
 import com.example.korepetycjebackend.dto.request.CreateAppointmentRequest;
 import com.example.korepetycjebackend.models.Appointment;
-import com.example.korepetycjebackend.repositories.AppointmentRepository;
-import com.example.korepetycjebackend.repositories.ClientRepository;
-import com.example.korepetycjebackend.repositories.SubjectRepository;
-import com.example.korepetycjebackend.repositories.TeacherRepository;
+import com.example.korepetycjebackend.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +16,9 @@ public class AppointmentService {
     private final SubjectRepository subjectRepository;
     private final ClientRepository clientRepository;
     private final TeacherRepository teacherRepository;
+    private final UserDataRepository userDataRepository;
 
     public UUID createAppointment(CreateAppointmentRequest request){
-//        var subject = subjectRepository.findById(request.getSubject())
-//                .orElseThrow(()-> new RuntimeException("subject not found"));
-//
-//        var client = clientRepository.findById(request.getClientId())
-//                .orElseThrow(()->new RuntimeException("client not found"));
 
         var teacher = teacherRepository.findById(request.getTeacherId())
                 .orElseThrow(()->new RuntimeException("teacher not found"));
@@ -45,13 +38,23 @@ public class AppointmentService {
         return appointment.getId();
     }
 
-//    public List<Appointment> getByTeacherId(UUID teacherId){
-//        return appointmentRepository.findByTeacherId(teacherId);
-//    }
-//
-//    public List<Appointment> getByClientId(UUID clientId){
-//        return appointmentRepository.findByClientId(clientId);
-//    }
+    public void bookAppointment(UUID appointmentId, UUID userDataId, String subjectName){
+        var appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(()-> new RuntimeException("appointment not found"));
+        var client = clientRepository.findByUserDataId(userDataId)
+                .orElseThrow(() -> new RuntimeException("client not found"));
+        var subject = subjectRepository.findBySubjectName(subjectName)
+                .orElseThrow(() -> new RuntimeException("subject not found"));
+        appointment.setSubject(subject);
+        appointmentRepository.save(appointment);
+
+        var clientAppointments = client.getAppointments();
+        clientAppointments.add(appointment);
+        client.setAppointments(clientAppointments);
+        clientRepository.save(client);
+
+    }
+
 
     public void deleteAppointment(UUID appointmentId){
         appointmentRepository.deleteById(appointmentId);

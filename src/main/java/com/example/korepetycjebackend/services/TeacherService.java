@@ -37,6 +37,12 @@ public class TeacherService {
         return teacherRepository.findById(id).orElseThrow(()-> new RuntimeException("teacher not found"));
     }
 
+    public List<Subject> getSubjectsByTeacherId(UUID teacherId){
+        var teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(()-> new RuntimeException("teacher not found"));
+        return teacher.getSubjects();
+    }
+
     public UUID createTeacher(RegisterRequest registerRequest){
 
         if(userDataRepository.existsByEmailAddress(registerRequest.getEmailAddress())){
