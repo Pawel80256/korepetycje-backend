@@ -113,7 +113,7 @@ public class DatabaseInit {
             teacherRepository.save(teacher2);
 
             var userData3 = UserData.builder()
-                    .id(UUID.randomUUID())
+                    .id(UUID.fromString("c5a6311b-e164-4633-ac7f-849e4bd84de7"))
                     .firstName("teacherFirstName3")
                     .lastName("teacherLastName3")
                     .emailAddress("teacher3@op.pl")
@@ -121,10 +121,10 @@ public class DatabaseInit {
                     .role("TEACHER")
                     .build();
             var teacher3 = Teacher.builder()
-                    .id(UUID.randomUUID())
+                    .id(UUID.fromString("c5a6311b-e164-4633-ac7f-849e4bd84de8"))
                     .userData(userData3)
-                    .city("Zambrów")
-                    .subjects(Arrays.asList(new Subject("biologia"),new Subject("chemia")))
+//                    .city("Zambrów")
+//                    .subjects(Arrays.asList(new Subject("biologia"),new Subject("chemia")))
                     .build();
 
             teacherRepository.save(teacher3);

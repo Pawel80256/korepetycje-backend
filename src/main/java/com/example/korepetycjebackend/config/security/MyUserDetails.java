@@ -13,12 +13,14 @@ import java.util.UUID;
 @Getter
 public class MyUserDetails implements UserDetails {
     private UUID userId;
+    private UUID userDataId;
     private String emailAddress;
     private String password;
     private List<GrantedAuthority> authorities;
 
-    public MyUserDetails(UserData userData){
-        this.userId = userData.getId();
+    public MyUserDetails(UserData userData, UUID userId){
+        this.userId = userId;
+        this.userDataId = userData.getId();
         this.emailAddress = userData.getEmailAddress();
         this.password = userData.getPassword();
         this.authorities = List.of(new SimpleGrantedAuthority(userData.getRole()));

@@ -18,4 +18,6 @@ public interface TeacherRepository extends JpaRepository<Teacher, UUID> {
 
     List<Teacher> findByCity(String city);
 
+    Optional<Teacher> findByUserDataId(UUID userDataId);
+
 }

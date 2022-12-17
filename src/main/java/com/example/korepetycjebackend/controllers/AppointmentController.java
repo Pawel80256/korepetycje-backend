@@ -18,8 +18,8 @@ public class AppointmentController {
     }
 
     @PutMapping("/appointment/{appointmentId}/book")
-    public void bookAppointment(@PathVariable UUID appointmentId, @RequestParam UUID userDataId, @RequestParam String subjectName){
-        appointmentService.bookAppointment(appointmentId,userDataId,subjectName);
+    public void bookAppointment(@PathVariable UUID appointmentId, @RequestParam UUID clientId, @RequestParam String subjectName){
+        appointmentService.bookAppointment(appointmentId,clientId,subjectName);
     }
 
     @DeleteMapping("/appointment/{appointmentId}")

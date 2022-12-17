@@ -38,10 +38,10 @@ public class AppointmentService {
         return appointment.getId();
     }
 
-    public void bookAppointment(UUID appointmentId, UUID userDataId, String subjectName){
+    public void bookAppointment(UUID appointmentId, UUID clientId, String subjectName){
         var appointment = appointmentRepository.findById(appointmentId)
                 .orElseThrow(()-> new RuntimeException("appointment not found"));
-        var client = clientRepository.findByUserDataId(userDataId)
+        var client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new RuntimeException("client not found"));
         var subject = subjectRepository.findBySubjectName(subjectName)
                 .orElseThrow(() -> new RuntimeException("subject not found"));
