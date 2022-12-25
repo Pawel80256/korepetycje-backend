@@ -134,6 +134,13 @@ public class TeacherService {
         paragraphRepository.save(paragraph);
     }
 
+    public void updateCity(UUID teacherId, String city){
+        var teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(()->new RuntimeException("teacher not found"));
+        teacher.setCity(city);
+        teacherRepository.save(teacher);
+    }
+
     public void changeParagraphOrder(UUID teacherId, UUID paragraphId, boolean orderUp){
         var teacher = teacherRepository.findById(teacherId)
                 .orElseThrow(()-> new RuntimeException("teacher not found"));
