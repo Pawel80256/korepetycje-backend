@@ -3,7 +3,6 @@ package com.example.korepetycjebackend.controllers;
 import com.example.korepetycjebackend.dto.request.AddToProfileInfoRequest;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.dto.request.UpdateParagraphRequest;
-import com.example.korepetycjebackend.models.Appointment;
 import com.example.korepetycjebackend.models.Subject;
 import com.example.korepetycjebackend.models.Teacher;
 import com.example.korepetycjebackend.services.AppointmentService;
@@ -63,9 +62,9 @@ public class TeacherController {
         return teacherService.createTeacher(request);
     }
 
-    @PostMapping("/teacher/{teacherId}/subjects")
-    public void addSubjects(@PathVariable UUID teacherId, @RequestBody List<String> subjectStrings){
-        teacherService.addSubjects(teacherId,subjectStrings);
+    @PostMapping("/teacher/{teacherId}/subject")
+    public void addSubject(@PathVariable UUID teacherId, @RequestParam String subjectName){
+        teacherService.addSubject(teacherId,subjectName);
     }
 
     @PostMapping("/teacher/{teacherId}/profileInfo")
@@ -86,6 +85,11 @@ public class TeacherController {
     @DeleteMapping("/teacher/{teacherId}/profileInfo/{paragraphId}")
     public void deleteFromProfileInfo(@PathVariable UUID teacherId, @PathVariable UUID paragraphId){
         teacherService.deleteFromProfileInfo(teacherId,paragraphId);
+    }
+
+    @DeleteMapping("/teacher/{teacherId}/subject")
+    public void deleteSubject(@PathVariable UUID teacherId, @RequestParam String subjectName){
+        teacherService.deleteSubject(teacherId,subjectName);
     }
 
 }

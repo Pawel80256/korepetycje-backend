@@ -67,15 +67,13 @@ public class TeacherService {
                 .collect(Collectors.toList());
     }
 
-    public void addSubjects(UUID teacherId, List<String> subjectStrings){
+    public void addSubject(UUID teacherId, String subjectName){
         var teacher = teacherRepository.findById(teacherId)
                 .orElseThrow(()-> new RuntimeException("teacher not found"));
 
         var teacherSubjects = teacher.getSubjects();
 
-        subjectStrings.forEach(subject->{
-            teacherSubjects.add(new Subject(subject));
-        });
+        teacherSubjects.add(new Subject(subjectName));
 
         teacher.setSubjects(teacherSubjects);
 
@@ -113,6 +111,16 @@ public class TeacherService {
 
         teacher.setProfileInfo(teacherProfileInfo);
 
+        teacherRepository.save(teacher);
+    }
+
+    public void deleteSubject(UUID teacherId, String subjectName){
+        var teacher = teacherRepository.findById(teacherId)
+                .orElseThrow(()->new RuntimeException("teacher not found"));
+
+        var teacherSubjects = teacher.getSubjects();
+        teacherSubjects.removeIf(subject -> subject.getSubjectName().equals(subjectName));
+        teacher.setSubjects(teacherSubjects);
         teacherRepository.save(teacher);
     }
 
