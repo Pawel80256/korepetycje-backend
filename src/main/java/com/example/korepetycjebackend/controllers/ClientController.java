@@ -1,6 +1,7 @@
 package com.example.korepetycjebackend.controllers;
 
 import com.example.korepetycjebackend.dto.AppointmentDto;
+import com.example.korepetycjebackend.dto.ClientDto;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.models.Appointment;
 import com.example.korepetycjebackend.models.Client;
@@ -22,6 +23,11 @@ public class ClientController {
     @GetMapping("/clients")
     public List<Client> getAllClients(){
         return clientService.getAllClients();
+    }
+
+    @GetMapping("/client/{clientId}")
+    public ClientDto getClientById(@PathVariable UUID clientId){
+        return clientService.getClientById(clientId);
     }
 
     @GetMapping("/client/{clientId}/appointments")

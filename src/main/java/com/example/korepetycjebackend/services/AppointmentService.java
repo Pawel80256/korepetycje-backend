@@ -27,6 +27,7 @@ public class AppointmentService {
                 .id(UUID.randomUUID())
                 .date(request.getDate())
                 .subject(null)
+                .teacher(teacher)
                 .build();
 
         appointmentRepository.save(appointment);

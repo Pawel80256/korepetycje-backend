@@ -1,5 +1,6 @@
 package com.example.korepetycjebackend.services;
 
+import com.example.korepetycjebackend.dto.AppointmentDto;
 import com.example.korepetycjebackend.dto.TeacherDto;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.dto.request.AddToProfileInfoRequest;
@@ -38,7 +39,19 @@ public class TeacherService {
 
     public TeacherDto getById(UUID id){
         var teacher = teacherRepository.findById(id).orElseThrow(()-> new RuntimeException("teacher not found"));
-        return modelMapper.map(teacher, TeacherDto.class);
+        return TeacherDto.builder()
+                .id(teacher.getId())
+                .city(teacher.getCity())
+                .userData(teacher.getUserData())
+                .subjects(teacher.getSubjects())
+                .profileInfo(teacher.getProfileInfo())
+                .opinions(teacher.getOpinions())
+                .appointments(
+                        teacher.getAppointments().stream()
+                                .map(appointment -> modelMapper.map(appointment, AppointmentDto.class))
+                                .collect(Collectors.toList())
+                )
+                .build();
     }
 
     public List<Subject> getSubjectsByTeacherId(UUID teacherId){

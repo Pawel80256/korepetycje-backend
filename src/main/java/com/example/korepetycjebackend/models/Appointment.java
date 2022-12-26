@@ -22,5 +22,5 @@ public class Appointment {
     private Subject subject;
 
     @ManyToOne
-    Teacher teacher;
+    private Teacher teacher;
 }
