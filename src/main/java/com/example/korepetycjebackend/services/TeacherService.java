@@ -1,5 +1,6 @@
 package com.example.korepetycjebackend.services;
 
+import com.example.korepetycjebackend.dto.TeacherDto;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.dto.request.AddToProfileInfoRequest;
 import com.example.korepetycjebackend.dto.request.UpdateParagraphRequest;
@@ -11,6 +12,7 @@ import com.example.korepetycjebackend.repositories.SubjectRepository;
 import com.example.korepetycjebackend.repositories.TeacherRepository;
 import com.example.korepetycjebackend.repositories.UserDataRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ public class TeacherService {
     private final ParagraphRepository paragraphRepository;
     private final SubjectRepository subjectRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper modelMapper;
     public List<Teacher> getAll(){
         return teacherRepository.findAll();
     }
@@ -33,8 +36,9 @@ public class TeacherService {
         return teacherRepository.findBySubject(subject);
     }
 
-    public Teacher getById(UUID id){
-        return teacherRepository.findById(id).orElseThrow(()-> new RuntimeException("teacher not found"));
+    public TeacherDto getById(UUID id){
+        var teacher = teacherRepository.findById(id).orElseThrow(()-> new RuntimeException("teacher not found"));
+        return modelMapper.map(teacher, TeacherDto.class);
     }
 
     public List<Subject> getSubjectsByTeacherId(UUID teacherId){
@@ -58,12 +62,15 @@ public class TeacherService {
         return teacher.getId();
     }
 
-    public List<Teacher> getAllBySubjectAndCity(String subjectName, String city){
+    public List<TeacherDto> getAllBySubjectAndCity(String subjectName, String city){
         var teachers = teacherRepository.findByCity(city);
         var subject = subjectRepository.findBySubjectName(subjectName)
                 .orElseThrow(() -> new RuntimeException("Teacher's subject not found"));
-        return teachers.stream()
+        var teachersBySubject = teachers.stream()
                 .filter(teacher -> teacher.getSubjects().contains(subject))
+                .collect(Collectors.toList());
+        return teachersBySubject.stream()
+                .map(teacher -> modelMapper.map(teacher,TeacherDto.class))
                 .collect(Collectors.toList());
     }
 

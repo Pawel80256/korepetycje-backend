@@ -1,5 +1,6 @@
 package com.example.korepetycjebackend.controllers;
 
+import com.example.korepetycjebackend.dto.TeacherDto;
 import com.example.korepetycjebackend.dto.request.AddToProfileInfoRequest;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.dto.request.UpdateParagraphRequest;
@@ -20,23 +21,23 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final AppointmentService appointmentService;
 
-    @GetMapping("/teachers")
-    public List<Teacher> getAllTeachers(){
-        return teacherService.getAll();
-    }
+//    @GetMapping("/teachers")
+//    public List<Teacher> getAllTeachers(){
+//        return teacherService.getAll();
+//    }
 
     @GetMapping("/teacher/{teacherId}")
-    public Teacher getById(@PathVariable UUID teacherId){
+    public TeacherDto getById(@PathVariable UUID teacherId){
         return teacherService.getById(teacherId);
     }
 
-    @GetMapping("/teachersBySubject")
-    public List<Teacher> getBySubject(@RequestParam String subject){
-        return teacherService.getBySubject(subject);
-    }
+//    @GetMapping("/teachersBySubject")
+//    public List<Teacher> getBySubject(@RequestParam String subject){
+//        return teacherService.getBySubject(subject);
+//    }
 
     @GetMapping("/teachersBySubjectAndCity")
-    List<Teacher> getBySubjectAndCity(@RequestParam String subject, @RequestParam String city){
+    List<TeacherDto> getBySubjectAndCity(@RequestParam String subject, @RequestParam String city){
         return teacherService.getAllBySubjectAndCity(subject,city);
     }
 
