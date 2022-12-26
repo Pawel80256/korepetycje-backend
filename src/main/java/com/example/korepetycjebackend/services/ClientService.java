@@ -1,6 +1,7 @@
 package com.example.korepetycjebackend.services;
 
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
+import com.example.korepetycjebackend.models.Appointment;
 import com.example.korepetycjebackend.models.Client;
 import com.example.korepetycjebackend.models.UserData;
 import com.example.korepetycjebackend.repositories.ClientRepository;
@@ -36,5 +37,12 @@ public class ClientService {
 
         clientRepository.save(client);
         return client.getId();
+    }
+
+    public List<Appointment> getAppointmentsByClientId(UUID clientId){
+        var client = clientRepository.findById(clientId)
+                .orElseThrow(()->new RuntimeException("client not found"));
+
+        return client.getAppointments();
     }
 }

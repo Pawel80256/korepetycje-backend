@@ -1,5 +1,6 @@
 package com.example.korepetycjebackend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -20,4 +21,6 @@ public class Appointment {
     @ManyToOne
     private Subject subject;
 
+    @ManyToOne
+    Teacher teacher;
 }

@@ -22,11 +22,11 @@ public class ClientController {
     public List<Client> getAllClients(){
         return clientService.getAllClients();
     }
-//
-//    @GetMapping("/client/{clientId}/appointments")
-//    public List<Appointment> getAppointmentsByClientId(@PathVariable UUID clientId){
-//        return appointmentService.getByClientId(clientId);
-//    }
+
+    @GetMapping("/client/{clientId}/appointments")
+    public List<Appointment> getAppointmentsByClientId(@PathVariable UUID clientId){
+        return clientService.getAppointmentsByClientId(clientId);
+    }
 
     @PostMapping("/client")
     public UUID createClient(@RequestBody RegisterRequest request){
