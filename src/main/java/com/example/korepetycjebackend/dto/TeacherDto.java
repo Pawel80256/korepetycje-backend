@@ -19,6 +19,6 @@ public class TeacherDto {
     private UserData userData;
     private List<Subject> subjects;
     private List<Paragraph> profileInfo;
-    private List<Opinion> opinions;
+    private List<OpinionDto> opinions;
     private List<AppointmentDto> appointments;
 }

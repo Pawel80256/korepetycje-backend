@@ -1,6 +1,7 @@
 package com.example.korepetycjebackend.services;
 
 import com.example.korepetycjebackend.dto.AppointmentDto;
+import com.example.korepetycjebackend.dto.OpinionDto;
 import com.example.korepetycjebackend.dto.TeacherDto;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.dto.request.AddToProfileInfoRequest;
@@ -45,7 +46,11 @@ public class TeacherService {
                 .userData(teacher.getUserData())
                 .subjects(teacher.getSubjects())
                 .profileInfo(teacher.getProfileInfo())
-                .opinions(teacher.getOpinions())
+                .opinions(
+                        teacher.getOpinions().stream()
+                        .map(opinion -> modelMapper.map(opinion, OpinionDto.class))
+                        .collect(Collectors.toList())
+                )
                 .appointments(
                         teacher.getAppointments().stream()
                                 .map(appointment -> modelMapper.map(appointment, AppointmentDto.class))
@@ -82,9 +87,27 @@ public class TeacherService {
         var teachersBySubject = teachers.stream()
                 .filter(teacher -> teacher.getSubjects().contains(subject))
                 .collect(Collectors.toList());
-        return teachersBySubject.stream()
-                .map(teacher -> modelMapper.map(teacher,TeacherDto.class))
-                .collect(Collectors.toList());
+        List<TeacherDto> result = new ArrayList<>();
+        teachersBySubject.forEach(teacher -> {
+            result.add(TeacherDto.builder()
+                    .id(teacher.getId())
+                    .city(teacher.getCity())
+                    .userData(teacher.getUserData())
+                    .subjects(teacher.getSubjects())
+                    .profileInfo(teacher.getProfileInfo())
+                    .opinions(
+                            teacher.getOpinions().stream()
+                                    .map(opinion -> modelMapper.map(opinion, OpinionDto.class))
+                                    .collect(Collectors.toList())
+                    )
+                    .appointments(
+                            teacher.getAppointments().stream()
+                                    .map(appointment -> modelMapper.map(appointment, AppointmentDto.class))
+                                    .collect(Collectors.toList())
+                    )
+                    .build());
+        });
+        return result;
     }
 
     public void addSubject(UUID teacherId, String subjectName){
