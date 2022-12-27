@@ -36,5 +36,6 @@ public class Teacher {
     public Teacher(RegisterRequest registerRequest) {
         this.id = UUID.randomUUID();
         this.userData = new UserData(registerRequest, Role.TEACHER.toString());
+        this.city = registerRequest.getCity();
     }
 }
