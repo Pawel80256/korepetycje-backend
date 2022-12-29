@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,17 @@ public class OpinionService {
                 .orElseThrow(() -> new RuntimeException("client not found"));
         var teacher = teacherRepository.findById(createOpinionRequest.getTeacherId())
                 .orElseThrow(() -> new RuntimeException("teacher not found"));
+
+        var teacherOpinions = teacher.getOpinions();
+
+        var teacherOpinionsClientIds = teacherOpinions.stream()
+                .map(opinion -> opinion.getClient().getId())
+                .collect(Collectors.toList());
+
+        if(teacherOpinionsClientIds.contains(createOpinionRequest.getClientId())){
+            throw new RuntimeException("This client already gave opinion to this teacher");
+        }
+
         var opinion = Opinion.builder()
                 .id(UUID.randomUUID())
                 .textValue(createOpinionRequest.getTextValue())
@@ -34,7 +46,6 @@ public class OpinionService {
 
         opinionRepository.save(opinion);
 
-        var teacherOpinions = teacher.getOpinions();
         teacherOpinions.add(opinion);
         teacher.setOpinions(teacherOpinions);
 

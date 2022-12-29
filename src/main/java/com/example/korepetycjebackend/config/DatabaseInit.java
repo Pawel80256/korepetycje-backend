@@ -123,8 +123,8 @@ public class DatabaseInit {
             var teacher3 = Teacher.builder()
                     .id(UUID.fromString("c5a6311b-e164-4633-ac7f-849e4bd84de8"))
                     .userData(userData3)
-//                    .city("Zambrów")
-//                    .subjects(Arrays.asList(new Subject("biologia"),new Subject("chemia")))
+                    .city("Zambrów")
+                    .subjects(Arrays.asList(new Subject("biologia"),new Subject("chemia")))
                     .build();
 
             teacherRepository.save(teacher3);
