@@ -24,4 +24,7 @@ public class Opinion {
 
     @ManyToOne
     private Client client;
+
+    @ManyToOne
+    private Teacher teacher;
 }

@@ -13,9 +13,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OpinionDto {
-    private UUID uuid;
+    private UUID id;
     private String textValue;
     private Integer numericValue;
     private LocalDate createdAt;
     private ClientUserDataDto client;
+    private TeacherWithoutAppointmentDto teacher;
 }
