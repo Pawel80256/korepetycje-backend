@@ -23,9 +23,11 @@ public class AppointmentService {
         var teacher = teacherRepository.findById(request.getTeacherId())
                 .orElseThrow(()->new RuntimeException("teacher not found"));
 
+        var date = request.getDate().plusHours(1);
+
         var appointment = Appointment.builder()
                 .id(UUID.randomUUID())
-                .date(request.getDate())
+                .date(date)
                 .subject(null)
                 .teacher(teacher)
                 .build();

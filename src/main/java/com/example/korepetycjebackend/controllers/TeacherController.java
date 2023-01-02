@@ -21,10 +21,10 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final AppointmentService appointmentService;
 
-//    @GetMapping("/teachers")
-//    public List<Teacher> getAllTeachers(){
-//        return teacherService.getAll();
-//    }
+    @GetMapping("/teachers")
+    public List<TeacherDto> getAllTeachers(){
+        return teacherService.getAll();
+    }
 
     @GetMapping("/teacher/{teacherId}")
     public TeacherDto getById(@PathVariable UUID teacherId){

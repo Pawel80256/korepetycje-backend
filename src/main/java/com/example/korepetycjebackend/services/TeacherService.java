@@ -30,8 +30,9 @@ public class TeacherService {
     private final SubjectRepository subjectRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
-    public List<Teacher> getAll(){
-        return teacherRepository.findAll();
+
+    public List<TeacherDto> getAll(){
+        return mapToEntity(teacherRepository.findAll());
     }
 
     public List<Teacher> getBySubject(String subject){
@@ -87,27 +88,7 @@ public class TeacherService {
         var teachersBySubject = teachers.stream()
                 .filter(teacher -> teacher.getSubjects().contains(subject))
                 .collect(Collectors.toList());
-        List<TeacherDto> result = new ArrayList<>();
-        teachersBySubject.forEach(teacher -> {
-            result.add(TeacherDto.builder()
-                    .id(teacher.getId())
-                    .city(teacher.getCity())
-                    .userData(teacher.getUserData())
-                    .subjects(teacher.getSubjects())
-                    .profileInfo(teacher.getProfileInfo())
-                    .opinions(
-                            teacher.getOpinions().stream()
-                                    .map(opinion -> modelMapper.map(opinion, OpinionDto.class))
-                                    .collect(Collectors.toList())
-                    )
-                    .appointments(
-                            teacher.getAppointments().stream()
-                                    .map(appointment -> modelMapper.map(appointment, AppointmentDto.class))
-                                    .collect(Collectors.toList())
-                    )
-                    .build());
-        });
-        return result;
+        return mapToEntity(teachersBySubject);
     }
 
     public void addSubject(UUID teacherId, String subjectName){
@@ -206,5 +187,30 @@ public class TeacherService {
 
         paragraphRepository.saveAll(Arrays.asList(selectedParagraph,neighbourParagraph));
 
+    }
+
+    private List<TeacherDto> mapToEntity(List<Teacher> teachers){
+        List<TeacherDto> result = new ArrayList<>();
+
+        teachers.forEach(teacher -> {
+            result.add(TeacherDto.builder()
+                    .id(teacher.getId())
+                    .city(teacher.getCity())
+                    .userData(teacher.getUserData())
+                    .subjects(teacher.getSubjects())
+                    .profileInfo(teacher.getProfileInfo())
+                    .opinions(
+                            teacher.getOpinions().stream()
+                                    .map(opinion -> modelMapper.map(opinion, OpinionDto.class))
+                                    .collect(Collectors.toList())
+                    )
+                    .appointments(
+                            teacher.getAppointments().stream()
+                                    .map(appointment -> modelMapper.map(appointment, AppointmentDto.class))
+                                    .collect(Collectors.toList())
+                    )
+                    .build());
+        });
+                return result;
     }
 }
