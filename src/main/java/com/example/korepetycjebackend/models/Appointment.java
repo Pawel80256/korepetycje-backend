@@ -23,4 +23,7 @@ public class Appointment {
 
     @ManyToOne
     private Teacher teacher;
+
+    @ManyToOne
+    private Client client;
 }

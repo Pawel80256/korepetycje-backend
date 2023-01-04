@@ -2,6 +2,7 @@ package com.example.korepetycjebackend.controllers;
 
 import com.example.korepetycjebackend.dto.AppointmentDto;
 import com.example.korepetycjebackend.dto.ClientDto;
+import com.example.korepetycjebackend.dto.ClientUserDataDto;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.models.Appointment;
 import com.example.korepetycjebackend.models.Client;
@@ -9,6 +10,7 @@ import com.example.korepetycjebackend.models.UserData;
 import com.example.korepetycjebackend.services.AppointmentService;
 import com.example.korepetycjebackend.services.ClientService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +20,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClientController {
     private final ClientService clientService;
+    private final ModelMapper modelMapper;
     private final AppointmentService appointmentService;
 
     @GetMapping("/clients")
-    public List<Client> getAllClients(){
+    public List<ClientUserDataDto> getAllClients(){
         return clientService.getAllClients();
     }
 

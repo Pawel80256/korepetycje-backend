@@ -1,13 +1,16 @@
 package com.example.korepetycjebackend.services;
 
+import com.example.korepetycjebackend.dto.AppointmentDto;
 import com.example.korepetycjebackend.dto.request.CreateAppointmentRequest;
 import com.example.korepetycjebackend.models.Appointment;
 import com.example.korepetycjebackend.repositories.*;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +20,13 @@ public class AppointmentService {
     private final ClientRepository clientRepository;
     private final TeacherRepository teacherRepository;
     private final UserDataRepository userDataRepository;
+    private final ModelMapper modelMapper;
 
+    public List<AppointmentDto> getAllAppointments(){
+        return appointmentRepository.findAll().stream()
+                .map(appointment -> modelMapper.map(appointment,AppointmentDto.class))
+                .collect(Collectors.toList());
+    }
     public UUID createAppointment(CreateAppointmentRequest request){
 
         var teacher = teacherRepository.findById(request.getTeacherId())
@@ -49,6 +58,7 @@ public class AppointmentService {
         var subject = subjectRepository.findBySubjectName(subjectName)
                 .orElseThrow(() -> new RuntimeException("subject not found"));
         appointment.setSubject(subject);
+        appointment.setClient(client);
         appointmentRepository.save(appointment);
 
         var clientAppointments = client.getAppointments();

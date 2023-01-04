@@ -2,6 +2,7 @@ package com.example.korepetycjebackend.services;
 
 import com.example.korepetycjebackend.dto.AppointmentDto;
 import com.example.korepetycjebackend.dto.ClientDto;
+import com.example.korepetycjebackend.dto.ClientUserDataDto;
 import com.example.korepetycjebackend.dto.request.RegisterRequest;
 import com.example.korepetycjebackend.models.Appointment;
 import com.example.korepetycjebackend.models.Client;
@@ -24,8 +25,11 @@ public class ClientService {
     private final UserDataRepository userDataRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
-    public List<Client> getAllClients(){
-        return clientRepository.findAll();
+
+    public List<ClientUserDataDto> getAllClients(){
+        return clientRepository.findAll().stream()
+                .map(client->modelMapper.map(client,ClientUserDataDto.class))
+                .collect(Collectors.toList());
     }
 
     public UUID createClient(RegisterRequest registerRequest){
@@ -48,7 +52,13 @@ public class ClientService {
         var client = clientRepository.findById(clientId)
                 .orElseThrow(()->new RuntimeException("client not found"));
 
-        return modelMapper.map(client,ClientDto.class);
+        return ClientDto.builder()
+                .id(client.getId())
+                .userData(client.getUserData())
+                .appointments(client.getAppointments().stream()
+                        .map(appointment -> modelMapper.map(appointment,AppointmentDto.class))
+                        .collect(Collectors.toList()))
+                .build();
     }
 
     public List<AppointmentDto> getAppointmentsByClientId(UUID clientId){

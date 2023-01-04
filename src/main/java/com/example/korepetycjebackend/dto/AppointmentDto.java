@@ -18,4 +18,5 @@ public class AppointmentDto {
     private LocalDateTime date;
     private Subject subject;
     private TeacherWithoutAppointmentDto teacher;
+    private ClientUserDataDto client;
 }
