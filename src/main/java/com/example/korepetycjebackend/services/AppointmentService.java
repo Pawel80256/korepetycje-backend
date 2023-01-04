@@ -3,6 +3,7 @@ package com.example.korepetycjebackend.services;
 import com.example.korepetycjebackend.dto.AppointmentDto;
 import com.example.korepetycjebackend.dto.request.CreateAppointmentRequest;
 import com.example.korepetycjebackend.models.Appointment;
+import com.example.korepetycjebackend.models.Teacher;
 import com.example.korepetycjebackend.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -70,6 +71,11 @@ public class AppointmentService {
 
 
     public void deleteAppointment(UUID appointmentId){
-        appointmentRepository.deleteById(appointmentId);
+        Appointment appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(()->new RuntimeException("Appointment does note exists"));
+        Teacher teacher = appointment.getTeacher();
+        teacher.getAppointments().remove(appointment);
+        teacherRepository.save(teacher);
+//        appointmentRepository.deleteById(appointmentId);
     }
 }
