@@ -29,6 +29,11 @@ public class AppointmentController {
         appointmentService.bookAppointment(appointmentId,clientId,subjectName);
     }
 
+    @PutMapping("/appointment/{appointmentId}/cancel")
+    public void cancelBooking(@PathVariable UUID appointmentId, @RequestParam UUID clientId){
+        appointmentService.cancelBooking(appointmentId,clientId);
+    }
+
     @DeleteMapping("/appointment/{appointmentId}")
     public void deleteAppointment(@PathVariable UUID appointmentId){
         appointmentService.deleteAppointment(appointmentId);

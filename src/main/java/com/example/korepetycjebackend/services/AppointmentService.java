@@ -66,7 +66,20 @@ public class AppointmentService {
         clientAppointments.add(appointment);
         client.setAppointments(clientAppointments);
         clientRepository.save(client);
+    }
 
+    public void cancelBooking(UUID appointmentId, UUID clientId){
+        var appointment = appointmentRepository.findById(appointmentId)
+                .orElseThrow(()-> new RuntimeException("appointment not found"));
+        var client = clientRepository.findById(clientId)
+                        .orElseThrow(()-> new RuntimeException("client not found"));
+        var clientAppointments = client.getAppointments();
+        clientAppointments.remove(appointment);
+        client.setAppointments(clientAppointments);
+        appointment.setClient(null);
+        appointment.setSubject(null);
+        clientRepository.save(client);
+        appointmentRepository.save(appointment);
     }
 
 
