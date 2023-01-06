@@ -26,4 +26,5 @@ public class Appointment {
 
     @ManyToOne
     private Client client;
+
 }

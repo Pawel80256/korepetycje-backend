@@ -2,6 +2,7 @@ package com.example.korepetycjebackend.config;
 
 import com.example.korepetycjebackend.dto.ParagraphDto;
 import com.example.korepetycjebackend.models.*;
+import com.example.korepetycjebackend.repositories.AdminRepository;
 import com.example.korepetycjebackend.repositories.AppointmentRepository;
 import com.example.korepetycjebackend.repositories.ClientRepository;
 import com.example.korepetycjebackend.repositories.TeacherRepository;
@@ -20,10 +21,26 @@ import java.util.UUID;
 public class DatabaseInit {
     private final ClientRepository clientRepository;
     private final TeacherRepository teacherRepository;
+    private final AdminRepository adminRepository;
     private final AppointmentRepository appointmentRepository;
     private final PasswordEncoder passwordEncoder;
     @PostConstruct
     public void init(){
+        if(adminRepository.count() == 0){
+            var userData = UserData.builder()
+                    .id(UUID.randomUUID())
+                    .firstName("admin")
+                    .lastName("admin")
+                    .emailAddress("admin@op.pl")
+                    .password(passwordEncoder.encode("password"))
+                    .role("ADMIN")
+                    .build();
+            var admin = Admin.builder()
+                    .id(UUID.randomUUID())
+                    .userData(userData)
+                    .build();
+            adminRepository.save(admin);
+        }
         if(clientRepository.count()==0){
             var userData = UserData.builder()
                     .id(UUID.randomUUID())
